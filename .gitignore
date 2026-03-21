@@ -11,7 +11,7 @@
 npm-debug.log*
 
 # TypeScript
-**/*.js
+
 # Uncomment the next line if you want to ignore all source maps
 # **/*.js.map
 *.tsbuildinfo
