@@ -15,4 +15,12 @@ app.use(express.json());
 // Parse URL-encoded bodies (extended: true allows nested objects)
 app.use(express.urlencoded({ extended: true }));
 
-
+//routes health
+app.use('/', (req, res) => {
+  res.status(200).json({
+    message: 'APP is live',
+    date: new Date().toISOString(),
+    version:"1.0.0",
+    github:"https://github.com/code-medina/brain-second-back.git"
+  });
+});
