@@ -8,13 +8,13 @@ export class IdeaController {
   constructor(service: IdeaService) {
     this.service = service;
   }
-  postIdea = (req: Request, res: Response, next: NextFunction) => {
+  postIdea = async (req: Request, res: Response, next: NextFunction) => {
     try {
       const { title, description } = req.body as {
         title: string;
         description: string;
       };
-      const newIdea = this.service.createIdea({ title, description });
+      const newIdea = await this.service.createIdea({ title, description });
       return res
         .status(201)
         .json({
