@@ -1,17 +1,11 @@
 import { Router } from 'express';
 
+import { IdeaController } from "./idea.controller.js";
+import { IdeaService } from "./idea.service.js";
+
 export const ideaRoutes = Router();
 
-ideaRoutes.post('/ideas', (req, res, next) => {
-  console.log('idea');
-  const { title, description } = req.body as {
-    title: string;
-    description: string;
-  };
+const service=new IdeaService()
+const controller=new IdeaController(service);
 
-  if (!title) return next(new Error('title is required'));
-
-  const newIdea = { id: '1', title, description };
-
-  res.json({ message: 'create idea successfully', data: newIdea });
-});
+ideaRoutes.post('/ideas', controller.postIdea);
