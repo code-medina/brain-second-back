@@ -1,5 +1,9 @@
 import crypto from "node:crypto";
+
+import type { Idea } from "./idea.schema.js";
+
 export interface IdeaRepository {
+  list():Promise<Idea[]>
   create({
     title,
     description,
@@ -16,8 +20,13 @@ export interface IdeaRepository {
 
 export class IdeaMemoryRepositiry implements IdeaRepository{
 
-    private ideas:any[]=[];
+    private ideas:Idea[]=[];
 
+    async list()
+    {
+      return this.ideas;
+
+    }
     async create({ title, description, }: {
         title: string;
         description: string;
@@ -30,9 +39,9 @@ export class IdeaMemoryRepositiry implements IdeaRepository{
 
         const _id=crypto.randomUUID();
         const createdAt=new Date();
-        const newIdea={_id,title,description,createdAt};
-         this.ideas.push(newIdea)
+        const newIdea={_id,title,description};
+         this.ideas.push({...newIdea,createdAt:createdAt.toISOString()})
     
-      return newIdea;
+      return {...newIdea,createdAt};
     }
 }

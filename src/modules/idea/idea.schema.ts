@@ -16,7 +16,7 @@ export const IdeaSchema = z.object({
     .trim()
     .min(MIN_DESCRIPTIOIN, 'description too short')
     .max(MAX_DESCRIPTION, 'description too long'),
-    createdAt:z.iso.date("createdAt invalid format")
+    createdAt:z.iso.datetime("createdAt invalid format")
 });
 export type Idea=z.infer<typeof IdeaSchema>;
 
