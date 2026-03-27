@@ -1,4 +1,5 @@
-import type { IdeaRepository } from './idea-memory.repository.js';
+import type { IdeaRepository } from './idea.repository.js';
+import type { UpdateIdeaDTO } from './idea.schema.js';
 
 export class IdeaService {
   private repository: IdeaRepository;
@@ -6,6 +7,9 @@ export class IdeaService {
     this.repository = repo;
   }
 
+  async editIdea(idea: UpdateIdeaDTO) {
+    return await this.repository.edit(idea);
+  }
   async listIdeas() {
     return await this.repository.list();
   }
