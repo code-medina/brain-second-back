@@ -1,6 +1,6 @@
 import type { Request, Response, NextFunction } from 'express';
 
-import { CreateIdeaSchema } from './idea.schema.js';
+import { CreateIdeaSchema, UpdateIdeaSchema } from './idea.schema.js';
 import type { IdeaService } from './idea.service.js';
 
 export class IdeaController {
@@ -8,6 +8,33 @@ export class IdeaController {
   constructor(service: IdeaService) {
     this.service = service;
   }
+
+  editIdea = async (req: Request, res: Response, next: NextFunction) => {
+    const id = req.params.id as string;
+
+    const result = UpdateIdeaSchema.safeParse({ ...req.body, id });
+    if (!result.success) {
+      return res
+        .status(400)
+        .json({
+          message: 'input invalid',
+          data: result.error.issues,
+          ok: false,
+        });
+    }
+
+    try {
+      const edit = await this.service.editIdea(result.data );
+      return res.status(200).json({
+        ok: true,
+        message: 'edit idea',
+        data: edit,
+      });
+    } catch (error) {
+      console.log("error")
+      next(error);
+    }
+  };
   getIdeas = async (req: Request, res: Response, next: NextFunction) => {
     try {
       const list = await this.service.listIdeas();
