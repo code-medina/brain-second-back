@@ -10,10 +10,18 @@ export class IdeaController {
   }
 
   destroyIdea = async (req: Request, res: Response, next: NextFunction) => {
-    const _id = req.params.id;
-    return res
-      .status(200)
-      .json({ ok: true, message: 'delete successfully', data: _id });
+    try {
+      const _id = req.params.id;
+      if (!_id) {
+        throw new Error('id is required');
+      }
+      await this.service.destroyIdea(_id as string);
+      return res
+        .status(200)
+        .json({ ok: true, message: 'delete successfully', data: _id });
+    } catch (error) {
+      next(error);
+    }
   };
   editIdea = async (req: Request, res: Response, next: NextFunction) => {
     try {
