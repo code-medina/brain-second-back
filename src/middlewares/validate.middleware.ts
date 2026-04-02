@@ -8,6 +8,7 @@ const validate = (
   return async (req: Request, res: Response, next: NextFunction) => {
     try {
       console.log('validate middleware');
+      console.log(req[source]);
       await schema.parseAsync(req[source]);
       next();
     } catch (error) {
