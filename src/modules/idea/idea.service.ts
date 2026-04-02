@@ -1,5 +1,5 @@
 import type { IdeaRepository } from './idea.repository.js';
-import type { UpdateIdeaDTO } from './idea.schema.js';
+import type { IdIdea, UpdateIdeaDTO } from './idea.schema.js';
 
 export class IdeaService {
   private repository: IdeaRepository;
@@ -7,6 +7,9 @@ export class IdeaService {
     this.repository = repo;
   }
 
+  async destroyIdea(_id: IdIdea) {
+    return await this.repository.destroy(_id);
+  }
   async editIdea(idea: UpdateIdeaDTO) {
     return await this.repository.edit(idea);
   }
