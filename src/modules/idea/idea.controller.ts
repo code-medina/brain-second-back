@@ -9,6 +9,12 @@ export class IdeaController {
     this.service = service;
   }
 
+  destroyIdea = async (req: Request, res: Response, next: NextFunction) => {
+    const _id = req.params.id;
+    return res
+      .status(200)
+      .json({ ok: true, message: 'delete successfully', data: _id });
+  };
   editIdea = async (req: Request, res: Response, next: NextFunction) => {
     try {
       const data = req.body as UpdateIdeaDTO;

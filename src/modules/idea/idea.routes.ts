@@ -17,9 +17,4 @@ ideaRoutes.put(
   validateBody(UpdateIdeaSchema),
   ideaController.editIdea,
 );
-ideaRoutes.delete('/ideas/:id', (req, res) => {
-  const _id = req.params.id;
-  return res
-    .status(200)
-    .json({ ok: true, message: 'deleting successfully', data: _id });
-});
+ideaRoutes.delete('/ideas/:id',ideaController.destroyIdea);
