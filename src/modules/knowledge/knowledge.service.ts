@@ -1,9 +1,9 @@
-import crypto from 'node:crypto';
+
+import type { KnowledgeRepository } from './knowledge.repository.js';
 export class KnowledgeService {
+  constructor(private repo: KnowledgeRepository) {}
   createKnowledge({ title, content }: { title: string; content: string }) {
-    const _id = crypto.randomUUID();
-    const createdAt = new Date();
-    const newKnowledge = { _id, title, content, createdAt };
+    const newKnowledge = this.repo.create({ title, content });
     return newKnowledge;
   }
 }
