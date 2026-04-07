@@ -1,22 +1,13 @@
 import crypto from 'node:crypto';
+
+import type { CreateKnowledgeDTO, Knowledge } from './knowledge.schema.js';
 export interface KnowledgeRepository {
-  create({ title, content }: { title: string; content: string }): {
-    _id: string;
-    title: string;
-    content: string;
-    createdAt: Date;
-  };
+  create({ title, content }: CreateKnowledgeDTO): Knowledge;
 }
 export class KnowledgeMemoryRepository implements KnowledgeRepository {
-    
-  create({ title, content }: { title: string; content: string }): {
-    _id: string;
-    title: string;
-    content: string;
-    createdAt: Date;
-  } {
+  create({ title, content }: CreateKnowledgeDTO): Knowledge {
     const _id = crypto.randomUUID();
-    const createdAt = new Date();
+    const createdAt = new Date().toISOString();
     return { _id, title, content, createdAt };
   }
 }

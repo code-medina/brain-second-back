@@ -1,11 +1,12 @@
 import type { Request, Response } from 'express';
 
+import type { CreateKnowledgeDTO } from './knowledge.schema.js';
 import type { KnowledgeService } from './knowledge.service.js';
 
 export class KnowledgeController {
   constructor(private service: KnowledgeService) {}
   postKnowledge = (req: Request, res: Response) => {
-    const { title, content } = req.body as { title: string; content: string };
+    const { title, content } = req.body as CreateKnowledgeDTO;
     if (!title || !content || title.trim() === '' || content.trim() === '') {
       return res.status(400).json({ ok: false, message: 'invalid input' });
     }
