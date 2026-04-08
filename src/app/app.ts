@@ -5,6 +5,7 @@ import express, { type Application } from 'express';
 
 //routes
 import v1Routes from './routes.js';
+import { globalErrorMiddleware } from '../middlewares/global-error.middleware.js';
 
 export const app: Application = express();
 //cors
@@ -33,3 +34,4 @@ app.get('/', (req, res) => {
     github: 'https://github.com/code-medina/brain-second-back.git',
   });
 });
+app.use(globalErrorMiddleware);

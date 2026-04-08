@@ -20,9 +20,9 @@ export class IdeaMemoryRepositiry implements IdeaRepository {
   private ideas: Idea[] = [];
 
   async destroy(id: IdIdea): Promise<void> {
-    const index = this.ideas.findIndex((i) => i._id === id);
+    const index = this.ideas.findIndex((i) => i._id === id.id);
     if (index === -1) {
-      throw new Error('not found idea : ' + id);
+      throw new Error('not found idea : ' + id.id);
     }
     console.log('delete', this.ideas.splice(index, 1));
   }

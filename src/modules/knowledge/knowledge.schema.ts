@@ -16,9 +16,22 @@ export const KnowledgeSchema = z.object({
     .trim()
     .min(MIN_CONTENT, '[content] too short')
     .max(MAX_CONTENT, '[content] too larger'),
-    createdAt:z.iso.datetime("invalid date")
+  createdAt: z.iso.datetime('invalid date'),
 });
-export type Knowledge=z.infer<typeof KnowledgeSchema>
+export type Knowledge = z.infer<typeof KnowledgeSchema>;
 
-export const CreateKnowledge=KnowledgeSchema.omit({_id:true,createdAt:true});
-export type CreateKnowledgeDTO=z.infer<typeof CreateKnowledge>
+export const CreateKnowledgeSchema = KnowledgeSchema.omit({
+  _id: true,
+  createdAt: true,
+});
+export type CreateKnowledgeDTO = z.infer<typeof CreateKnowledgeSchema>;
+
+export const UpdateKnowledgeSchema = KnowledgeSchema.partial().extend({
+  _id: z.string().min(1, '[_id] invalid'),
+});
+export type UpdateKnowledDTO = z.infer<typeof UpdateKnowledgeSchema>;
+
+export const IdKnowledgeSchema = z.object({
+  id: z.string().min(1, '[_id] invalid'),
+});
+export type IdKnowledgeDTO = z.infer<typeof IdKnowledgeSchema>;

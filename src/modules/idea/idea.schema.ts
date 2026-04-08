@@ -6,12 +6,14 @@ const MAX_DESCRIPTION = 300;
 const MIN_DESCRIPTIOIN = 2;
 
 //id
-export const IdIdeaSchema=z.string().trim().min(1,"id invalid")
-export type IdIdea=z.infer<typeof IdIdeaSchema>
+export const IdIdeaSchema = z.object({
+  id: z.string().min(1, '[_id] invalid'),
+});
+export type IdIdea = z.infer<typeof IdIdeaSchema>;
 
 //idea
 export const IdeaSchema = z.object({
-  _id: IdIdeaSchema,
+  _id: z.string().min(1, '[_id] invalid'),
   title: z
     .string()
     .trim()
@@ -22,15 +24,16 @@ export const IdeaSchema = z.object({
     .trim()
     .min(MIN_DESCRIPTIOIN, 'description too short')
     .max(MAX_DESCRIPTION, 'description too long'),
-    createdAt:z.iso.datetime("createdAt invalid format")
+  createdAt: z.iso.datetime('createdAt invalid format'),
 });
-export type Idea=z.infer<typeof IdeaSchema>;
+export type Idea = z.infer<typeof IdeaSchema>;
 
 //create
-export const CreateIdeaSchema=IdeaSchema.omit({_id:true,createdAt:true})
-export type CreateIdeaDTO=z.infer<typeof CreateIdeaSchema>;
+export const CreateIdeaSchema = IdeaSchema.omit({ _id: true, createdAt: true });
+export type CreateIdeaDTO = z.infer<typeof CreateIdeaSchema>;
 
 //update
-export const UpdateIdeaSchema=IdeaSchema.partial().extend({_id:IdIdeaSchema})
-export type UpdateIdeaDTO=z.infer< typeof UpdateIdeaSchema>
-
+export const UpdateIdeaSchema = IdeaSchema.partial().extend({
+  _id: z.string().min(1, '[_id] invalid'),
+});
+export type UpdateIdeaDTO = z.infer<typeof UpdateIdeaSchema>;

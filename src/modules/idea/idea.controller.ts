@@ -2,6 +2,7 @@ import type { Request, Response, NextFunction } from 'express';
 
 import type { CreateIdeaDTO, UpdateIdeaDTO } from './idea.schema.js';
 import type { IdeaService } from './idea.service.js';
+import type { IdKnowledgeDTO } from '../knowledge/knowledge.schema.js';
 
 export class IdeaController {
   private service: IdeaService;
@@ -11,14 +12,14 @@ export class IdeaController {
 
   destroyIdea = async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const _id = req.params.id;
+      const _id = req.params as IdKnowledgeDTO;
       if (!_id) {
         throw new Error('id is required');
       }
-      await this.service.destroyIdea(_id as string);
+      await this.service.destroyIdea(_id);
       return res
         .status(200)
-        .json({ ok: true, message: 'delete successfully', data: _id });
+        .json({ ok: true, message: 'delete successfully', data: _id.id });
     } catch (error) {
       next(error);
     }
